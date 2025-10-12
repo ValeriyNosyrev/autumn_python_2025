@@ -51,7 +51,7 @@ def load_game():
     print(session_uuid,key, list(mask))
     start_game(session_uuid,key.strip(),list(mask), list(key))
     # Завершаем работу с файлом, убираем завершение программы
-    f.close
+    f.close()
 
 def start_game(session_uuid, key, mask, list_word):
     print(DICT_DEFENITION_WORD[key])
