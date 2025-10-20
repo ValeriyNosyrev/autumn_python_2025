@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список дел</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Список дел</h1>
+    <form method="POST" action="/add">
+        <div class="actions">
+            <input type="text" name="task" placeholder="Добавить задачу">
+                <div>
+                    <textarea name="description" placeholder="Описание задачи" rows = 3></textarea>
+                </div>
+            <input type="date" name="start_date">
+            <select name="priority">
+                <option value="2">Высокий</option>
+                <option value="1">Средний</option>
+                <option value="0">Низкий</option>
+            </select>
+        <button type="submit">Add</button>
+        </div>
+    </form>
+    <ul>
+        {% for task in tasks | sort(attribute='priority', reverse=True) | sort(attribute='complete')  %}
+            <li class="{{ 'high' if task.priority == 2 else 'medium' if task.priority == 1 else 'low' }} {{ 'complete' if task.complete == 1 }}">
+                {% if task.complete %}
+                    <strike>{{ task.task }}</strike>
+                {% else %}
+                    {{ task.task }}
+                {% endif %}
+                {% if task.description %}
+                    <div class="task-description">Описание задачи: {{ task.description }}</div>
+                {% endif %}
+                {% if task.start_date %}
+                    <div class="task-start-date">Дата начала: {{ task.start_date }}</div>
+                {% endif %}
+                <div class="actions">
+                    <a href="/complete/{{ task.id }}" class="btn">Complete</a>
+                    <a href="/delete/{{ task.id }}" class="btn">Delete</a>
+                    <a href="/edit/{{ task.id }}" class="btn">Edit</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
