@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title or 'Отчёт' }}</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 30px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    h2 {
+      color: #e67e22;
+      border-bottom: 2px solid #f1c40f;
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #d5dbdb;
+      padding: 12px 15px;
+      text-align: left;
+    }
+    th {
+      background-color: #f1c40f;
+      color: #2c3940;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    tr:nth-child(even) {
+      background-color: #fdf2e5;
+    }
+    tr:hover {
+      background-color: #ffeaa7;
+    }
+    td {
+      color: #2c3940;
+    }
+  </style>
+</head>
+<body>
+  <h2>{{ title or 'Отчёт по товарам' }}</h2>
+  <table>
+    <thead>
+      <tr>
+        {% for header in headers %}
+        <th>{{ header|replace('_', ' ')|title }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+      <tr>
+        {% for header in headers %}
+        <td>{{ row[header] if row[header] is not none else '' }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
